@@ -13,5 +13,5 @@ FROM reps AS r
 INNER JOIN customers AS c ON r.rep_id = c.rep_id
 INNER JOIN orders AS o ON c.customer_id = o.customer_id
 WHERE o.status = 'completed'
- GROUP BY r.rep_id, r.rep_name, o.order_month, r.monthly_target
+GROUP BY r.rep_id, r.rep_name, o.order_month, r.monthly_target
 ORDER BY r.rep_name ASC, o.order_month ASC;

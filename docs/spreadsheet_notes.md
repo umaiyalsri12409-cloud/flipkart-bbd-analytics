@@ -1,72 +1,56 @@
-\# Spreadsheet Notes – Flipkart Big Billion Days Analytics
+# Spreadsheet Cleaning and Reconciliation Notes
 
+## 1. Objective
 
+The purpose of the spreadsheet work was to clean and enrich the Flipkart Big Billion Days order data, prepare a completed-orders dataset, summarize sales performance, and reconcile spreadsheet results with SQL results.
 
-\## 1. Data Source
+## 2. Data Preparation
 
-The dataset contains four tables: `reps`, `products`, `customers`, and `orders`. The `orders` table contains 90 records.
+- Imported the order data from `orders_enriched.csv` into Google Sheets.
+- Used the products lookup table to retrieve product categories and unit prices.
+- Standardized customer first and last names using `TRIM` and `PROPER`.
+- Used `VLOOKUP` to retrieve product categories.
+- Used `XLOOKUP` to retrieve product unit prices.
+- Calculated revenue using unit price multiplied by quantity.
 
+## 3. Completed Orders Dataset
 
+Created a `completed_orders` tab containing completed orders only.
 
-\## 2. Data Cleaning
+The final columns were arranged in this order:
 
-\- Checked the dataset for missing values and inconsistent data.
+`order_id`, `order_month`, `clean_first_name`, `clean_last_name`, `region`, `rep_name`, `item`, `category`, `unit_price`, `quantity`, `amount`, `revenue_calc`, `status`.
 
-\- Checked order statuses and amount values.
+The completed-orders dataset was checked against the expected completed-order count of 63 records.
 
-\- Kept the original data unchanged.
+## 4. Summary Metrics
 
-\- Used the enriched orders dataset generated from SQL query `q09` for further analysis.
+The spreadsheet summary included:
 
+- Completed orders: 63
+- Total revenue: ₹346,200
+- Average order amount: ₹5,495.24
+- Total units sold: 106
+- Unique products: 9
 
+## 5. Pivot Tables
 
-\## 3. Revenue Calculation
+Two pivot tables were prepared:
 
-Revenue is calculated using only orders with `status = 'completed'`.
+1. **Category and Region Revenue:** Product category as rows, region as columns, and the sum of order amount as values.
+2. **Monthly Sales Summary:** Order month as rows, with total order amount and order count as values.
 
+These tables support analysis of regional category performance and monthly sales trends.
 
+## 6. Reconciliation with SQL
 
-\- Completed orders are included in revenue calculations.
+Compared the spreadsheet completed-order revenue with the SQL result.
 
-\- Pending and disputed orders are excluded.
+- Spreadsheet completed-order revenue: ₹346,200
+- SQL completed-order revenue: ₹346,200
+- Difference: ₹0
+- Reconciliation status: PASS
 
-\- Missing amount values are left blank and are not treated as confirmed revenue.
+## 7. Conclusion
 
-
-
-\## 4. Spreadsheet Analysis
-
-The following checks should be performed using Excel or Google Sheets:
-
-\- Count the total number of orders.
-
-\- Filter orders by status.
-
-\- Calculate completed-order revenue.
-
-\- Summarize revenue by region and product category.
-
-\- Compare representative sales performance with monthly targets.
-
-
-
-\## 5. SQL Result Validation
-
-The SQL results should be compared with the spreadsheet calculations to confirm that the totals and group-wise summaries match.
-
-
-
-Expected checks:
-
-\- `q09` should contain 90 data rows, excluding the header.
-
-\- `q05` should report 63 completed orders and total revenue of 346200.
-
-\- Pending and disputed orders must not be included in completed-order revenue.
-
-
-
-\## 6. Notes
-
-Record any mismatches, missing values, or corrections discovered during the spreadsheet checks. Add final observations only after verifying the actual data and results.
-
+The spreadsheet workflow prepared a cleaned and enriched completed-orders dataset, calculated summary metrics, generated pivot tables, and reconciled total revenue with the SQL analysis. The matching revenue totals indicate that the spreadsheet and SQL revenue results agree.
